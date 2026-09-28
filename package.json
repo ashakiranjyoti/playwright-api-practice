@@ -1,0 +1,12 @@
+{
+  "name": "playwright-api-practice",
+  "version": "1.0.0",
+  "description": "Beginner Playwright API testing practice for QA/SDET interviews",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed"
+  },
+  "devDependencies": {
+    "@playwright/test": "latest"
+  }
+}
