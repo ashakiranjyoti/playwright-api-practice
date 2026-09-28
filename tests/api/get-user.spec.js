@@ -49,4 +49,16 @@ LINE-BY-LINE EXPLANATION:
 
 6. expect(body.data.id).toBe(2);
    -> I verify the user id in the response.
+
+INTERVIEW FOLLOW-UP QUESTIONS:
+
+Q1. What is the request fixture in Playwright?
+-> It provides an API request context that I can use to send HTTP requests.
+
+Q2. How do you validate the response status?
+-> I use response.status() and an expect assertion.
+
+Q3. How do you read the API response body?
+-> I use await response.json() to get the response as a JavaScript object.
+
 */
