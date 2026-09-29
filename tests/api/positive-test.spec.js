@@ -36,6 +36,20 @@ EXPECTED RESPONSE:
 VALIDATION:
 We verify that the request is successful and user data is returned.
 
+SAMPLE OUTPUT:
+
+Response Status:
+200
+
+response.ok():
+true
+
+Validated User ID:
+2
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const { test, expect } = require('@playwright/test');
