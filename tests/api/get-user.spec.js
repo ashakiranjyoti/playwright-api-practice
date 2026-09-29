@@ -30,6 +30,21 @@ EXPECTED RESPONSE:
 VALIDATION:
 We validate the status code and verify that the returned user id is 2.
 
+SAMPLE OUTPUT:
+
+Response Status:
+200
+
+Validated Response Data:
+{
+  "data": {
+    "id": 2
+  }
+}
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const { test, expect } = require('@playwright/test');
