@@ -49,6 +49,20 @@ EXPECTED RESPONSE:
 VALIDATION:
 We validate the status code and the updated name and job.
 
+SAMPLE OUTPUT:
+
+Response Status:
+200
+
+Validated Response Data:
+{
+  "name": "QA Engineer Updated",
+  "job": "Senior Automation Tester"
+}
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const { test, expect } = require('@playwright/test');
