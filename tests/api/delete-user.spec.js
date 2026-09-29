@@ -32,6 +32,17 @@ EXPECTED RESPONSE:
 VALIDATION:
 We validate the response status code.
 
+SAMPLE OUTPUT:
+
+Response Status:
+204
+
+Response Body:
+No Content
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const { test, expect } = require('@playwright/test');
