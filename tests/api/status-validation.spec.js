@@ -29,6 +29,17 @@ EXPECTED RESPONSE:
 VALIDATION:
 We validate that the response status is 200.
 
+SAMPLE OUTPUT:
+
+Response Status:
+200
+
+Validation:
+Status code matched the expected value 200.
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const { test, expect } = require('@playwright/test');
