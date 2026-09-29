@@ -1,61 +1,34 @@
 const { test, expect } = require('@playwright/test');
-const Ajv = require('ajv');
 
-test('Schema validation - GET user', async ({ request }) => {
+test('Simple schema validation - GET user', async ({ request }) => {
 
-  // Define the expected response structure
-  const schema = {
-    type: 'object',
-    required: ['data'],
-    properties: {
-      data: {
-        type: 'object',
-        required: ['id', 'email', 'first_name', 'last_name'],
-        properties: {
-          id: {
-            type: 'integer'
-          },
-          email: {
-            type: 'string'
-          },
-          first_name: {
-            type: 'string'
-          },
-          last_name: {
-            type: 'string'
-          }
-        }
-      }
-    }
-  };
-
-  // Send GET request
+  // Send GET request for user 2
   const response = await request.get('/api/users/2', {
     headers: {
       'x-api-key': process.env.REQRES_API_KEY
     }
   });
 
-  // Check status code
+  // Check that API returned 200 OK
   expect(response.status()).toBe(200);
 
-  // Read response body
+  // Read response body as JSON
   const body = await response.json();
 
-  // Create AJV validator
-  const ajv = new Ajv();
+  // Check that the main data object exists
+  expect(body).toHaveProperty('data');
 
-  // Compile the schema
-  const validate = ajv.compile(schema);
+  // Check that required fields exist
+  expect(body.data).toHaveProperty('id');
+  expect(body.data).toHaveProperty('email');
+  expect(body.data).toHaveProperty('first_name');
+  expect(body.data).toHaveProperty('last_name');
 
-  // Validate the actual response against the schema
-  const isValid = validate(body);
-
-  // Fail the test if schema validation fails
-  expect(
-    isValid,
-    JSON.stringify(validate.errors, null, 2)
-  ).toBe(true);
+  // Check the data types of important fields
+  expect(typeof body.data.id).toBe('number');
+  expect(typeof body.data.email).toBe('string');
+  expect(typeof body.data.first_name).toBe('string');
+  expect(typeof body.data.last_name).toBe('string');
 });
 
 /*
@@ -63,11 +36,12 @@ CONCEPT: schema-validation.spec.js
 
 WHAT ARE WE DOING:
 
-We are validating the complete structure of the API response
-against a JSON Schema.
+We are doing simple schema validation without any external library.
 
-Instead of checking only one or two fields, I verify that
-required fields exist and have the expected data types.
+Instead of using AJV, I manually verify that:
+
+1. Required fields are present.
+2. Important fields have the expected data types.
 
 REQUEST:
 GET /api/users/2
@@ -77,8 +51,8 @@ EXPECTED RESPONSE:
 
 SCHEMA CHECKS:
 
-data       -> object
-id         -> integer
+data       -> exists
+id         -> number
 email      -> string
 first_name -> string
 last_name  -> string
@@ -92,10 +66,11 @@ Schema Validation:
 PASSED
 
 Validated Structure:
-data.id -> integer
-data.email -> string
-data.first_name -> string
-data.last_name -> string
+data -> exists
+id -> number
+email -> string
+first_name -> string
+last_name -> string
 
 Playwright Result:
 1 passed
@@ -105,43 +80,55 @@ LINE-BY-LINE EXPLANATION:
 1. const { test, expect } = require('@playwright/test');
    -> I import Playwright's test and expect functions.
 
-2. const Ajv = require('ajv');
-   -> I import AJV, which is used to validate JSON Schema.
+2. test('Simple schema validation - GET user', async ({ request }) => {
+   -> I create an API test and use the request fixture.
 
-3. const schema = { ... };
-   -> I define the expected response structure and data types.
+3. request.get('/api/users/2', { ... });
+   -> I send a GET request for user 2.
 
-4. request.get('/api/users/2', { ... });
-   -> I send the API request.
+4. expect(response.status()).toBe(200);
+   -> I verify the response status is 200.
 
 5. const body = await response.json();
-   -> I read the API response as a JavaScript object.
+   -> I read the response body as a JavaScript object.
 
-6. const ajv = new Ajv();
-   -> I create an AJV validator object.
+6. expect(body).toHaveProperty('data');
+   -> I verify that the data field exists.
 
-7. const validate = ajv.compile(schema);
-   -> I compile the schema into a validation function.
+7. expect(body.data).toHaveProperty('id');
+   -> I verify that the id field exists.
 
-8. const isValid = validate(body);
-   -> I check whether the actual response matches the schema.
+8. expect(body.data).toHaveProperty('email');
+   -> I verify that the email field exists.
 
-9. JSON.stringify(validate.errors, null, 2)
-   -> If validation fails, this gives readable validation errors.
+9. expect(body.data).toHaveProperty('first_name');
+   -> I verify that the first_name field exists.
 
-10. expect(isValid).toBe(true);
-    -> I verify that schema validation passed.
+10. expect(body.data).toHaveProperty('last_name');
+    -> I verify that the last_name field exists.
+
+11. expect(typeof body.data.id).toBe('number');
+    -> I verify that id is a number.
+
+12. expect(typeof body.data.email).toBe('string');
+    -> I verify that email is a string.
+
+13. expect(typeof body.data.first_name).toBe('string');
+    -> I verify that first_name is a string.
+
+14. expect(typeof body.data.last_name).toBe('string');
+    -> I verify that last_name is a string.
 
 INTERVIEW FOLLOW-UP QUESTIONS:
 
 Q1. What is schema validation?
--> It verifies that the response structure and data types match the expected contract.
+-> It checks whether the response has the expected structure and data types.
 
-Q2. Why use schema validation?
--> It helps detect missing fields, unexpected structure, or incorrect data types.
+Q2. Can you do schema validation without AJV?
+-> Yes. For simple checks, I can validate required fields and data types using Playwright assertions.
 
-Q3. Which library are you using here?
--> I am using AJV to validate the JSON response against a JSON Schema.
+Q3. Why do you use toHaveProperty()?
+-> It verifies that a required property exists in the response.
 
 FLOW:
 
@@ -149,9 +136,9 @@ API Response
    ↓
 response.json()
    ↓
-JSON Schema
+Check required fields
    ↓
-AJV Validation
+Check data types
    ↓
 Pass / Fail
 */
