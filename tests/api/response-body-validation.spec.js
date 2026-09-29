@@ -34,6 +34,23 @@ EXPECTED RESPONSE:
 VALIDATION:
 We validate the user id, email, and first name from the response body.
 
+SAMPLE OUTPUT:
+
+Response Status:
+200
+
+Validated Response Body:
+{
+  "data": {
+    "id": 2,
+    "email": "<present>",
+    "first_name": "<present>"
+  }
+}
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const { test, expect } = require('@playwright/test');
