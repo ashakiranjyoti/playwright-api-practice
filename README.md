@@ -35,7 +35,12 @@ playwright-api-practice/
         ├── multiple-field-validation.spec.js
         ├── positive-test.spec.js
         ├── negative-test.spec.js
-        └── api-chaining.spec.js
+        ├── api-chaining.spec.js
+        ├── before-hooks.spec.js
+        ├── custom-fixtures.spec.js
+        ├── parameterized-test.spec.js
+        ├── schema-validation.spec.js
+        └── response-time-validation.spec.js
 ```
 
 ## Setup
@@ -422,6 +427,207 @@ Validate response
 
 **Q3. Where is the chaining happening?**  
 -> The ID from `createBody.id` is used in the next GET URL.
+
+
+---
+
+## 16. beforeAll / beforeEach Hooks
+
+**File:** [before-hooks.spec.js](./tests/api/before-hooks.spec.js)
+
+**Concept:** Playwright Hooks
+
+**What it does:** Demonstrates one-time setup with `beforeAll` and repeated setup with `beforeEach`.
+
+**Flow:**
+
+```text
+beforeAll -> runs once
+              ↓
+           Test 1
+
+beforeEach -> runs
+              ↓
+           Test 1
+
+beforeEach -> runs
+              ↓
+           Test 2
+```
+
+**Interview questions:**
+
+**Q1. What is beforeAll?**  
+-> It runs once before all tests in the current test file.
+
+**Q2. What is beforeEach?**  
+-> It runs before every test.
+
+**Q3. beforeAll vs beforeEach?**  
+-> beforeAll is for one-time setup, while beforeEach is for setup required before every test.
+
+---
+
+## 17. Custom Fixtures
+
+**File:** [custom-fixtures.spec.js](./tests/api/custom-fixtures.spec.js)
+
+**Concept:** Custom Playwright Fixture
+
+**What it does:** Creates a custom `apiKey` fixture and makes it available directly inside the test.
+
+**Flow:**
+
+```text
+test.extend()
+    ↓
+Create apiKey fixture
+    ↓
+Provide apiKey
+    ↓
+Test receives apiKey
+    ↓
+Send API request
+```
+
+**Interview questions:**
+
+**Q1. What is a custom fixture?**  
+-> A reusable setup or data provider created with Playwright's `test.extend()`.
+
+**Q2. Why use custom fixtures?**  
+-> To reduce repeated setup code and keep tests cleaner.
+
+**Q3. How do you create a custom fixture?**  
+-> I use `test.extend()` and define the fixture inside it.
+
+---
+
+## 18. Data-Driven / Parameterized Testing
+
+**File:** [parameterized-test.spec.js](./tests/api/parameterized-test.spec.js)
+
+**Concept:** Parameterized Testing
+
+**What it does:** Runs the same API test logic with multiple sets of test data.
+
+**Test data:**
+
+```text
+Existing user
+GET /api/users/2 -> 200
+
+Non-existing user
+GET /api/users/999999 -> 404
+```
+
+**Sample output:**
+
+```text
+Test 1 -> 200 -> PASS
+Test 2 -> 404 -> PASS
+
+Playwright Result:
+2 passed
+```
+
+**Interview questions:**
+
+**Q1. What is parameterized testing?**  
+-> Running the same test logic with different sets of input data.
+
+**Q2. Why use it?**  
+-> It avoids duplicating the same test code for multiple data sets.
+
+**Q3. How is it implemented here?**  
+-> I store data in an array and use a `for...of` loop to create separate tests.
+
+---
+
+## 19. JSON Schema Validation
+
+**File:** [schema-validation.spec.js](./tests/api/schema-validation.spec.js)
+
+**Concept:** Schema Validation
+
+**What it does:** Validates that the API response structure and data types match an expected JSON Schema.
+
+**Library:** `ajv`
+
+**Example checks:**
+
+```text
+data       -> object
+id         -> integer
+email      -> string
+first_name -> string
+last_name  -> string
+```
+
+**Sample output:**
+
+```text
+Response Status:
+200
+
+Schema Validation:
+PASSED
+
+Playwright Result:
+1 passed
+```
+
+**Interview questions:**
+
+**Q1. What is schema validation?**  
+-> It verifies that the API response structure and data types match the expected contract.
+
+**Q2. Why use schema validation?**  
+-> It helps detect missing fields, unexpected structure, and incorrect data types.
+
+**Q3. Which library is used here?**  
+-> AJV is used to validate the response against JSON Schema.
+
+---
+
+## 20. Response Time Validation
+
+**File:** [response-time-validation.spec.js](./tests/api/response-time-validation.spec.js)
+
+**Concept:** API Response Time Validation
+
+**What it does:** Measures how long the API takes to respond and checks it against a defined threshold.
+
+**Example threshold:** Less than 2000 ms (2 seconds).
+
+**Sample output:**
+
+```text
+Response Status:
+200
+
+Response Time:
+184 ms
+
+Performance Validation:
+184 ms < 2000 ms -> PASS
+
+Playwright Result:
+1 passed
+```
+
+**Important:** The response time value above is a sample output for learning. Actual time depends on the environment and API.
+
+**Interview questions:**
+
+**Q1. How do you validate API response time?**  
+-> I record the start time, send the request, calculate the elapsed time, and compare it with the expected threshold.
+
+**Q2. What does 2000 mean?**  
+-> It means 2000 milliseconds, or 2 seconds.
+
+**Q3. Is response time validation the same as functional validation?**  
+-> No. Functional validation checks correctness of the response, while response time validation checks performance against a defined threshold.
 
 ---
 
