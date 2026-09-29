@@ -38,6 +38,22 @@ EXPECTED RESPONSE:
 VALIDATION:
 We check that id, email, first_name, and last_name are present and verify id is 2.
 
+SAMPLE OUTPUT:
+
+Response Status:
+200
+
+Validated Response Fields:
+{
+  "id": 2,
+  "email": "<present>",
+  "first_name": "<present>",
+  "last_name": "<present>"
+}
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const { test, expect } = require('@playwright/test');
