@@ -45,6 +45,21 @@ EXPECTED RESPONSE:
 VALIDATION:
 We validate the status code, the name, the job, and that an id is returned.
 
+SAMPLE OUTPUT:
+
+Response Status:
+201
+
+Validated Response Data:
+{
+  "name": "QA Engineer",
+  "job": "Automation Tester",
+  "id": "<generated-id>"
+}
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const { test, expect } = require('@playwright/test');
