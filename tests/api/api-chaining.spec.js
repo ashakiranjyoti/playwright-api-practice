@@ -73,6 +73,23 @@ VALIDATION:
 We create a record, get its generated ID, use that ID in the next request,
 and verify that the same record is returned.
 
+SAMPLE OUTPUT:
+
+Step 1 - POST Create:
+Response Status: 201
+
+Generated Record ID:
+<generated-id>
+
+Step 2 - GET Same Record:
+Response Status: 200
+
+Validated Record ID:
+<generated-id>
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const apiKey = process.env.REQRES_API_KEY;
