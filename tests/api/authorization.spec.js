@@ -34,6 +34,17 @@ EXPECTED RESPONSE:
 VALIDATION:
 We validate that the API rejects the invalid Bearer token.
 
+SAMPLE OUTPUT:
+
+Response Status:
+401
+
+Meaning:
+Unauthorized - invalid Bearer token was rejected.
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const { test, expect } = require('@playwright/test');
