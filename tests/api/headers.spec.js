@@ -39,6 +39,25 @@ EXPECTED RESPONSE:
 VALIDATION:
 We validate the status code and verify the returned user id.
 
+SAMPLE OUTPUT:
+
+Response Status:
+200
+
+Validated Response Data:
+{
+  "data": {
+    "id": 2
+  }
+}
+
+Request Headers Sent:
+x-api-key: <value>
+X-Test-Client: Playwright
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const { test, expect } = require('@playwright/test');
