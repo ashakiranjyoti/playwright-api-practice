@@ -29,6 +29,17 @@ EXPECTED RESPONSE:
 VALIDATION:
 We validate that a non-existing user returns status code 404.
 
+SAMPLE OUTPUT:
+
+Response Status:
+404
+
+Meaning:
+Not Found - the requested user does not exist.
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const { test, expect } = require('@playwright/test');
