@@ -32,6 +32,17 @@ EXPECTED RESPONSE:
 VALIDATION:
 We validate that the response content type is JSON.
 
+SAMPLE OUTPUT:
+
+Response Status:
+200
+
+Validated Response Header:
+content-type: <contains application/json>
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const { test, expect } = require('@playwright/test');
