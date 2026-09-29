@@ -37,6 +37,23 @@ EXPECTED RESPONSE:
 VALIDATION:
 We validate the status code, the page value, and that the response contains users.
 
+SAMPLE OUTPUT:
+
+Request:
+GET /api/users?page=2
+
+Response Status:
+200
+
+Validated Response Data:
+{
+  "page": 2,
+  "data": "users available"
+}
+
+Playwright Result:
+1 passed
+
 LINE-BY-LINE EXPLANATION:
 
 1. const { test, expect } = require('@playwright/test');
