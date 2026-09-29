@@ -7,7 +7,6 @@
     "test:headed": "playwright test --headed"
   },
   "devDependencies": {
-    "@playwright/test": "latest",
-    "ajv": "latest"
+    "@playwright/test": "latest"
   }
 }
